@@ -18,7 +18,7 @@
 
   "autoload": {
     "psr-4": {
-      "Psr\\Container\\": "src/"
+      "CBW\\QMessage\\": "src/"
     }
   }
 }
