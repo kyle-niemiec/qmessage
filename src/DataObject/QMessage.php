@@ -2,171 +2,82 @@
 
 namespace CBW\QMessage\DataObject;
 
+use CBW\QMessage\DataObject\QMessage\ReservationQMessage;
+use CBW\QMessage\Enumeration\EventType;
 use Symfony\Component\Serializer\Annotation as Serializer;
 
 /**
  * Class QMessage
  * @package CBW\QMessage\DataObject
  */
-final class QMessage
+class QMessage extends AbstractDataObject
 {
-    /** @var string */
+    /** @var string $event */
     #[Serializer\Groups(["default", "accept"])]
-    private $event;
+    public string $event;
 
-    /** @var int */
+    /** @var int $timestamp */
     #[Serializer\Groups(["default", "accept"])]
-    private $timestamp;
+    public int $timestamp;
 
-    /** @var string */
+    /** @var string $traceId */
     #[Serializer\Groups(["default", "accept"])]
-    private $traceId;
+    public string $traceId;
 
-    /** @var string */
+    /** @var string $source */
     #[Serializer\Groups(["default", "accept"])]
-    private $source;
+    public string $source;
 
-    /** @var integer */
+    /** @var int $attempts */
     #[Serializer\Groups(["default", "accept"])]
-    private $attempts;
+    public int $attempts;
 
-    /** @var array The serialized data-object */
+    /** @var string[] $data The serialized data-objects */
     #[Serializer\Groups(["default", "accept"])]
-    private $data;
+    public array $data;
 
-    /** @var int */
-    private $franchiseId;
-
+    /** @var int $franchiseId */
+    #[Serializer\Ignore()]
+    public int $franchiseId;
+    
     /**
-     * @return string
-     */
-    public function getEvent(): string
-    {
-        return $this->event;
-    }
-
-    /**
+     * Generate a specific QMessage FCQN based on an event type.
+     * 
      * @param string $event
-     *
-     * @return QMessage
+     * 
+     * @return string FCQN of QMessage subtype
      */
-    public function setEvent(string $event): QMessage
+    final public static function getQMessageFQCN(string $event): string
     {
-        $this->event = $event;
-        return $this;
-    }
+        $eventsMessageTypes = [
+            EventType::ARCHIVE_CONTACT->value => ContactQMessage::class,
+            EventType::CREATE_BOARDING->value => ReservationQMessage::class,
+            EventType::CREATE_CONTACT->value => ContactQMessage::class,
+            EventType::CREATE_INTERVIEW->value => ReservationQMessage::class,
+            EventType::DAYCARE_CONFIRMATION->value => ReservationQMessage::class,
+//            EventType::EXPIRING_VACCINE->value => VaccineQMessage::class,
+            EventType::NEW_LEAD->value => ContactQMessage::class,
+//            EventType::PASSED_INTERVIEW->value => PetInterviewQMessage::class,
+//            EventType::RESERVATION_REMINDER->value => ReservationReminderQMessage::class,
+//            EventType::THANK_YOU->value => ContactQMessage::class,
+            EventType::UPDATE_CONTACT->value => ContactQMessage::class,
+//            'registration_new_customer': 'App\QMessage\DataObject\AccountEvent',
+//            'registration_existing_customer': 'App\QMessage\DataObject\AccountEvent',
+//            'reservation_declined': 'App\QMessage\DataObject\ReservationEvent',
+        ];
 
-    /**
-     * @return int
-     */
-    public function getTimestamp(): int
-    {
-        return $this->timestamp;
-    }
+        $event_registered = array_key_exists($event, $eventsMessageTypes);
 
-    /**
-     * @param int $timestamp
-     *
-     * @return QMessage
-     */
-    public function setTimestamp(int $timestamp): QMessage
-    {
-        $this->timestamp = $timestamp;
-        return $this;
-    }
+        if (! $event_registered) {
+            $message = sprintf(
+                "The event type '%s' has no data-object registration in %s",
+                $event,
+                __METHOD__
+            );
 
-    /**
-     * @return string
-     */
-    public function getTraceId(): string
-    {
-        return $this->traceId;
-    }
+            throw new DataObjectException($message);
+        }
 
-    /**
-     * @param string $traceId
-     *
-     * @return QMessage
-     */
-    public function setTraceId(string $traceId): QMessage
-    {
-        $this->traceId = $traceId;
-        return $this;
-    }
-
-    /**
-     * @return string
-     */
-    public function getSource(): string
-    {
-        return $this->source;
-    }
-
-    /**
-     * @param string $source
-     *
-     * @return QMessage
-     */
-    public function setSource(string $source): QMessage
-    {
-        $this->source = $source;
-        return $this;
-    }
-
-    /**
-     * @return int
-     */
-    public function getAttempts(): int
-    {
-        return $this->attempts;
-    }
-
-    /**
-     * @param int $attempts
-     *
-     * @return QMessage
-     */
-    public function setAttempts(int $attempts): QMessage
-    {
-        $this->attempts = $attempts;
-        return $this;
-    }
-
-    /**
-     * @return array
-     */
-    public function getData(): array
-    {
-        return $this->data;
-    }
-
-    /**
-     * @param array $data
-     *
-     * @return QMessage
-     */
-    public function setData(array $data): QMessage
-    {
-        $this->data = $data;
-        return $this;
-    }
-
-    /**
-     * @return int
-     */
-    public function getFranchiseId(): int
-    {
-        return $this->franchiseId;
-    }
-
-    /**
-     * @param int $franchiseId
-     *
-     * @return QMessage
-     */
-    public function setFranchiseId(int $franchiseId): QMessage
-    {
-        $this->franchiseId = $franchiseId;
-        return $this;
+        return $eventsMessageTypes[$event];
     }
 }
