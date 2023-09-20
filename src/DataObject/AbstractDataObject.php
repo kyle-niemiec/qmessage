@@ -14,13 +14,11 @@ abstract class AbstractDataObject
      * Serialize the data-object to a JSON string.
      *
      * @param SerializerInterface $serializer
-     * @param string $dataObject
      *
      * @return string
      */
     final public function serialize(
         SerializerInterface $serializer,
-        string $dataObject
     ): string
     {
         return $serializer->serialize($this, 'json');

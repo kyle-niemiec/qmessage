@@ -1,0 +1,49 @@
+parameters:
+    # Define event types as parameters for use as constants in YAML files
+
+    cbw.qmessage.event_types.archive_contact:
+        !php/enum CBW\QMessage\Enumeration\EventType::ARCHIVE_CONTACT->value
+
+    cbw.qmessage.event_types.birthday_reminder:
+        !php/enum CBW\QMessage\Enumeration\EventType::BIRTHDAY_REMINDER->value
+
+    cbw.qmessage.event_types.create_boarding:
+        !php/enum CBW\QMessage\Enumeration\EventType::CREATE_BOARDING->value
+
+    cbw.qmessage.event_types.create_contact:
+        !php/enum CBW\QMessage\Enumeration\EventType::CREATE_CONTACT->value
+
+    cbw.qmessage.event_types.create_interview:
+        !php/enum CBW\QMessage\Enumeration\EventType::CREATE_INTERVIEW->value
+
+    cbw.qmessage.event_types.daycare_confirmation:
+        !php/enum CBW\QMessage\Enumeration\EventType::DAYCARE_CONFIRMATION->value
+
+    cbw.qmessage.event_types.expiring_vaccine:
+        !php/enum CBW\QMessage\Enumeration\EventType::EXPIRING_VACCINE->value
+
+    cbw.qmessage.event_types.new_lead:
+        !php/enum CBW\QMessage\Enumeration\EventType::NEW_LEAD->value
+
+    cbw.qmessage.event_types.passed_interview:
+        !php/enum CBW\QMessage\Enumeration\EventType::PASSED_INTERVIEW->value
+
+    cbw.qmessage.event_types.reservation_declined:
+        !php/enum CBW\QMessage\Enumeration\EventType::RESERVATION_DECLINED->value
+
+    cbw.qmessage.event_types.reservatoin_reminder:
+        !php/enum CBW\QMessage\Enumeration\EventType::RESERVATION_REMINDER->value
+
+    cbw.qmessage.event_types.thank_you:
+        !php/enum CBW\QMessage\Enumeration\EventType::THANK_YOU->value
+
+    cbw.qmessage.event_types.update_contact:
+        !php/enum CBW\QMessage\Enumeration\EventType::UPDATE_CONTACT->value
+
+    cbw.qmessage.event_types.update_reservation:
+        !php/enum CBW\QMessage\Enumeration\EventType::UPDATE_RESERVATION->value
+
+
+services:
+    # Define the container for dependency injection in factories.
+    Symfony\Component\DependencyInjection\ContainerInterface: '@service_container'

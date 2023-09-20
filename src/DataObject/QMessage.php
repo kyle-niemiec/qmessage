@@ -32,20 +32,21 @@ class QMessage extends AbstractDataObject
     #[Serializer\Groups(["default", "accept"])]
     public int $attempts;
 
-    /** @var string[] $data The serialized data-objects */
+    /** @var AbstractDataObject[] $data The serialized data-objects */
     #[Serializer\Groups(["default", "accept"])]
     public array $data;
 
     /** @var int $franchiseId */
     #[Serializer\Ignore()]
     public int $franchiseId;
-    
+
     /**
-     * Generate a specific QMessage FCQN based on an event type.
-     * 
+     * Generate a specific QMessage FQCN based on an event type.
+     *
      * @param string $event
-     * 
-     * @return string FCQN of QMessage subtype
+     *
+     * @throws DataObjectException
+     * @return string FQCN of QMessage subtype
      */
     final public static function getQMessageFQCN(string $event): string
     {
@@ -69,10 +70,12 @@ class QMessage extends AbstractDataObject
         $event_registered = array_key_exists($event, $eventsMessageTypes);
 
         if (! $event_registered) {
-            $message = sprintf(
-                "The event type '%s' has no data-object registration in %s",
-                $event,
-                __METHOD__
+            $message = vsprintf(
+                format: "The event type '%s' has no data-object registration in %s",
+                values: [
+                    $event,
+                    __METHOD__
+                ]
             );
 
             throw new DataObjectException($message);

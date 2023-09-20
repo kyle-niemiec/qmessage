@@ -13,5 +13,6 @@ final class ReservationQMessage extends QMessage
 {
     /** @var Reservation[] $data The serialized data-objects */
     #[Serializer\Groups(["default", "accept"])]
-    public array $data;
+    public array $data = [];
+
 }

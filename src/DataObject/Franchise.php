@@ -70,18 +70,18 @@ final class Franchise extends AbstractDataObject
     #[Serializer\Groups(["default", "accept"])]
     public ?int $statusId;
 
-    /** @var boolean|null $inBeta */
+    /** @var bool|null $inBeta */
     #[Serializer\Groups(["default", "accept"])]
     public ?bool $inBeta = false;
 
-    /** @var boolean|null $msgAppOptIn */
+    /** @var bool|null $msgAppOptIn */
     #[Serializer\Groups(["default", "accept"])]
     public ?bool $msgAppOptIn = true;
 
     /** @var integer|null $msgAppInterval */
     public ?int $msgAppInterval = 18;
 
-    /** @var boolean|null $isCorporateCamp */
+    /** @var bool|null $isCorporateCamp */
     #[Serializer\Groups(["default", "accept"])]
     public ?bool $isCorporateCamp = false;
 

@@ -14,4 +14,5 @@ final class ContactQMessage extends QMessage
     /** @var Contact[] $data The serialized data-objects */
     #[Serializer\Groups(["default", "accept"])]
     public array $data;
+
 }

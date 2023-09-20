@@ -15,7 +15,7 @@ final class Contact extends AbstractDataObject
     #[Serializer\Groups(["default", "accept"])]
     public int $id;
 
-    /** @var string $firstName */
+    /** @var string|null $firstName */
     #[Serializer\Groups(["default", "accept"])]
     #[Serializer\SerializedName("first_name")]
     public ?string $firstName;
