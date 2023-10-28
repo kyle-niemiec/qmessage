@@ -31,7 +31,7 @@ parameters:
     cbw.qmessage.event_types.reservation_declined:
         !php/enum CBW\QMessage\Enumeration\EventType::RESERVATION_DECLINED->value
 
-    cbw.qmessage.event_types.reservatoin_reminder:
+    cbw.qmessage.event_types.reservation_reminder:
         !php/enum CBW\QMessage\Enumeration\EventType::RESERVATION_REMINDER->value
 
     cbw.qmessage.event_types.thank_you:

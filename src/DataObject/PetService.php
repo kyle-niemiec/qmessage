@@ -8,11 +8,15 @@ namespace CBW\QMessage\DataObject;
  */
 final class PetService extends AbstractDataObject
 {
-    /** @var string $petName */
+    /**
+     * @var string $petName
+     */
     #[Serializer\Groups(["default", "accept"])]
     public string $petName;
 
-    /** @var string $serviceName */
+    /**
+     * @var string $serviceName
+     */
     #[Serializer\Groups(["default", "accept"])]
     public string $serviceName;
 

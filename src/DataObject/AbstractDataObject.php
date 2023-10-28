@@ -21,7 +21,10 @@ abstract class AbstractDataObject
         SerializerInterface $serializer,
     ): string
     {
-        return $serializer->serialize($this, 'json');
+        return $serializer->serialize(
+            data: $this,
+            format: 'json'
+        );
     }
 
     /**
@@ -37,6 +40,10 @@ abstract class AbstractDataObject
         string $dataObject
     ): static
     {
-        return $serializer->deserialize($dataObject, static::class);
+        return $serializer->deserialize(
+            data: $dataObject,
+            type: static::class,
+            format: 'json'
+        );
     }
 }

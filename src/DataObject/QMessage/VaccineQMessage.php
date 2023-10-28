@@ -3,17 +3,17 @@
 namespace CBW\QMessage\DataObject\QMessage;
 
 use CBW\QMessage\DataObject\QMessage;
-use CBW\QMessage\DataObject\Reservation;
+use CBW\QMessage\DataObject\VaccineData;
 use Symfony\Component\Serializer\Annotation as Serializer;
 
 /**
- * Class ReservationQMessage
+ * Class ContactQMessage
  * @package CBW\QMessage\DataObject\QMessage
  */
-final class ReservationQMessage extends QMessage
+final class VaccineQMessage extends QMessage
 {
     /**
-     * @var Reservation[] $data The serialized data-objects
+     * @var VaccineData[] $data The serialized data-objects
      */
     #[Serializer\Groups(["default", "accept"])]
     public array $data = [];

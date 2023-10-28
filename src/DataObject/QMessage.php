@@ -2,6 +2,9 @@
 
 namespace CBW\QMessage\DataObject;
 
+use App\QMessage\DataObject\Traits\SQSTraits;
+use App\QMessage\DataObject\Traits\VoxieTraits;
+use CBW\QMessage\DataObject\QMessage\ContactQMessage;
 use CBW\QMessage\DataObject\QMessage\ReservationQMessage;
 use CBW\QMessage\Enumeration\EventType;
 use Symfony\Component\Serializer\Annotation as Serializer;
@@ -12,31 +15,23 @@ use Symfony\Component\Serializer\Annotation as Serializer;
  */
 class QMessage extends AbstractDataObject
 {
-    /** @var string $event */
+    use SQSTraits, VoxieTraits;
+
+    /**
+     * @var string $event
+     */
     #[Serializer\Groups(["default", "accept"])]
     public string $event;
 
-    /** @var int $timestamp */
-    #[Serializer\Groups(["default", "accept"])]
-    public int $timestamp;
-
-    /** @var string $traceId */
-    #[Serializer\Groups(["default", "accept"])]
-    public string $traceId;
-
-    /** @var string $source */
-    #[Serializer\Groups(["default", "accept"])]
-    public string $source;
-
-    /** @var int $attempts */
-    #[Serializer\Groups(["default", "accept"])]
-    public int $attempts;
-
-    /** @var AbstractDataObject[] $data The serialized data-objects */
+    /**
+     * @var AbstractDataObject[] $data The serialized data-objects
+     */
     #[Serializer\Groups(["default", "accept"])]
     public array $data;
 
-    /** @var int $franchiseId */
+    /**
+     * @var int $franchiseId
+     */
     #[Serializer\Ignore()]
     public int $franchiseId;
 
@@ -60,11 +55,11 @@ class QMessage extends AbstractDataObject
             EventType::NEW_LEAD->value => ContactQMessage::class,
 //            EventType::PASSED_INTERVIEW->value => PetInterviewQMessage::class,
 //            EventType::RESERVATION_REMINDER->value => ReservationReminderQMessage::class,
-//            EventType::THANK_YOU->value => ContactQMessage::class,
+            EventType::THANK_YOU->value => ContactQMessage::class,
             EventType::UPDATE_CONTACT->value => ContactQMessage::class,
 //            'registration_new_customer': 'App\QMessage\DataObject\AccountEvent',
 //            'registration_existing_customer': 'App\QMessage\DataObject\AccountEvent',
-//            'reservation_declined': 'App\QMessage\DataObject\ReservationEvent',
+            EventType::RESERVATION_DECLINED->value => ReservationQMessage::class,
         ];
 
         $event_registered = array_key_exists($event, $eventsMessageTypes);

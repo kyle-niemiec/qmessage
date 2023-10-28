@@ -3,10 +3,10 @@
 namespace CBW\QMessage\Facade;
 
 use CBW\QMessage\DataObject\AbstractDataObject;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
+use Symfony\Contracts\HttpClient\ResponseInterface;
 
 /**
  * Class AbstractFacade
@@ -19,14 +19,16 @@ abstract class AbstractFacade
      *
      * @return string The API URL
      */
-    abstract protected static function apiUrl(): string;
+    abstract protected function apiUrl(): string;
 
     /**
      * Overridable function to return any headers to set for the request.
      *
+     * @param AbstractDataObject|null $dataObject
+     *
      * @return array
      */
-    protected function headers(): array
+    protected function headers(AbstractDataObject $dataObject = null): array
     {
         return [];
     }
@@ -39,6 +41,22 @@ abstract class AbstractFacade
     protected function requestOptions(): array
     {
         return [];
+    }
+
+    /**
+     * Overridable function for child classes to access the data-object with.
+     *
+     * @param AbstractDataObject $dataObject
+     * @param AbstractFacadeRoute $route
+     *
+     * @return AbstractDataObject
+     */
+    protected function preSend(
+        AbstractDataObject $dataObject,
+        AbstractFacadeRoute $route
+    ): AbstractDataObject
+    {
+        return $dataObject;
     }
 
     /**
@@ -60,19 +78,21 @@ abstract class AbstractFacade
      * @param AbstractDataObject $dataObject
      *
      * @throws TransportExceptionInterface
-     * @return Response
+     * @return ResponseInterface
      */
     final public function send(
         AbstractFacadeRoute $route,
         AbstractDataObject $dataObject
-    ): Response
+    ): ResponseInterface
     {
+        $dataObject = $this->preSend($dataObject, $route);
+
         $requestOptions = array_merge(
             $this->requestOptions(),
             [
                 'body' => $dataObject->serialize($this->serializer),
                 'headers' => array_merge(
-                    $this->headers(),
+                    $this->headers($dataObject),
                     [
                         'Content-Type' => 'application/json'
                     ]
@@ -81,12 +101,14 @@ abstract class AbstractFacade
         );
 
         $response = $this->client->request(
-            $route::method->name,
-            $this->facadeUrl($route->path()),
-            $requestOptions
+            method: $route::$method->name,
+            url: $this->facadeUrl($route->path()),
+            options: $requestOptions
         );
+
+        return $response;
     }
-    
+
     /**
      * Return a formatted URL for the HTTP client with a domain and a resource.
      * 
@@ -96,10 +118,14 @@ abstract class AbstractFacade
      */
     final public function facadeUrl(string $resource): string
     {
-        return sprintf(
-            "%s%s",
-            static::apiUrl(),
-            $resource
+        $url = vsprintf(
+            format: "%s%s",
+            values: [
+                static::apiUrl(),
+                $resource
+            ]
         );
+
+        return $url;
     }
 }
