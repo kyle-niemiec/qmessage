@@ -2,7 +2,7 @@
 
 namespace CBW\QMessage\Mediator;
 
-use \Exception;
+use Exception;
 
 /**
  * Class ConfiguratorException

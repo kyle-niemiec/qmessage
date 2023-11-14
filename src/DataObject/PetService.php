@@ -2,6 +2,8 @@
 
 namespace CBW\QMessage\DataObject;
 
+use Symfony\Component\Serializer\Annotation as Serializer;
+
 /**
  * Class PetService
  * @package CBW\QMessage\DataObject

@@ -2,10 +2,7 @@
 
 namespace CBW\QMessage\DataObject;
 
-use \DateTimeInterface;
 use Symfony\Component\Serializer\Annotation as Serializer;
-use CBW\QMessage\DataObject\Franchise;
-use CBW\QMessage\DataObject\PetVaccineExpiration;
 
 /**
  * Class VaccineData
@@ -17,17 +14,17 @@ final class VaccineData extends AbstractDataObject
      * @var Franchise
      */
     #[Serializer\Groups(["default", "accept"])]
-    protected $franchise;
+    public Franchise $franchise;
 
     /**
      * @var PetVaccineExpiration[]
      */
     #[Serializer\Groups(["default", "accept"])]
-    protected $pets;
+    public array $pets;
 
     /**
      * @var Contact
      */
     #[Serializer\Groups(["default", "accept"])]
-    protected $owner;
+    public Contact $owner;
 }

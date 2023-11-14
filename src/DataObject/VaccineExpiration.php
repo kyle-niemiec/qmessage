@@ -2,9 +2,8 @@
 
 namespace CBW\QMessage\DataObject;
 
-use \DateTimeInterface;
+use DateTimeInterface;
 use Symfony\Component\Serializer\Annotation as Serializer;
-use CBW\QMessage\DataObject\Franchise;
 
 /**
  * Class VaccineExpiration
@@ -16,11 +15,11 @@ final class VaccineExpiration extends AbstractDataObject
      * @var string
      */
     #[Serializer\Groups(["default", "accept"])]
-    public $vaccineName;
+    public string $vaccineName;
 
     /**
-     * @var DateTime
+     * @var DateTimeInterface
      */
     #[Serializer\Groups(["default", "accept"])]
-    public $vaccineExpirationDate;
+    public DateTimeInterface $vaccineExpirationDate;
 }

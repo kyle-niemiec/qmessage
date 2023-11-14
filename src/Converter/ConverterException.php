@@ -2,7 +2,7 @@
 
 namespace CBW\QMessage\Converter;
 
-use \Exception;
+use Exception;
 
 /**
  * Class ConverterException

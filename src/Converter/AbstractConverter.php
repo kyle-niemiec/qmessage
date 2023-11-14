@@ -3,6 +3,8 @@
 namespace CBW\QMessage\Converter;
 
 use CBW\QMessage\DataObject\AbstractDataObject;
+use CBW\QMessage\DataObject\QMessage;
+use Error;
 
 /**
  * Class AbstractConverter
@@ -24,7 +26,17 @@ abstract class AbstractConverter
      * @return array The associative map of data-object values from target to
      *               source.
      */
-    abstract public static function map(): array;
+    abstract public function map(): array;
+
+    /**
+     * Construct the converter with access to the original QMessage context.
+     *
+     * @param QMessage $message
+     */
+    #[NoReturn]
+    public function __construct(
+        protected readonly QMessage $message
+    ) { }
 
     /**
      * Convert a QMessage data-object to a facade data-object.
@@ -41,7 +53,7 @@ abstract class AbstractConverter
         // Catch non-existent FQCN errors
         try {
             $targetDataObject = new (static::targetFqcn());
-        } catch (Error $e) {
+        } catch (Error) {
             $message = vsprintf(
                 format: "The target FQCN (%s) for the converter %s was not found.",
                 values: [

@@ -2,7 +2,7 @@
 
 namespace CBW\QMessage\DataObject;
 
-use \DateTime;
+use DateTime;
 use Symfony\Component\Serializer\Annotation as Serializer;
 
 /**

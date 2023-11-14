@@ -47,11 +47,11 @@ class Mediator
             ]
         ));
 
-        $converter = $this->configurator->generateConverter($message->event);
+        $converter = $this->configurator->generateConverter($message);
 
         foreach ($message->data as $sourceDataObject) {
-            $route = $this->configurator->generateRoute($message->event, $sourceDataObject);
             $targetDataObject = $converter->convert($sourceDataObject);
+            $route = $this->configurator->generateRoute($message->event, $targetDataObject);
 
             $this->facade->send(
                 $route,

@@ -4,6 +4,7 @@ namespace CBW\QMessage\Mediator;
 
 use CBW\QMessage\Converter\AbstractConverter;
 use CBW\QMessage\DataObject\AbstractDataObject;
+use CBW\QMessage\DataObject\QMessage;
 use CBW\QMessage\Facade\AbstractFacadeRoute;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
@@ -160,18 +161,15 @@ class Configurator
     /**
      * Generate a converter for an event
      *
-     * @param string $event
-     *
-     * @throws ConfiguratorException
+     * @param QMessage $message
      * @return AbstractConverter
+     * @throws ConfiguratorException
      */
-    final public function generateConverter(
-        string $event
-    ): AbstractConverter
+    final public function generateConverter(QMessage $message): AbstractConverter
     {
-        self::verifyEvent($event, AbstractConverter::class);
+        self::verifyEvent($message->event, AbstractConverter::class);
         /** @var AbstractConverter $converter */
-        $converter = new static::$configuration[$event]['converter'];
+        $converter = new static::$configuration[$message->event]['converter']($message);
         return $converter;
     }
 
@@ -210,11 +208,13 @@ class Configurator
     ): void
     {
         if (! array_key_exists($event, static::$configuration)) {
-            $message = sprintf(
-                "Event '%s' is not defined in %s, could not generate %s",
-                $event,
-                static::class,
-                $targetFqcn
+            $message = vsprintf(
+                format: "Event '%s' is not defined in %s, could not generate %s",
+                values: [
+                    $event,
+                    static::class,
+                    $targetFqcn
+                ]
             );
 
             throw new ConfiguratorException($message);

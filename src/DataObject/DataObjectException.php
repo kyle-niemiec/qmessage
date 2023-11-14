@@ -2,7 +2,7 @@
 
 namespace CBW\QMessage\DataObject;
 
-use \Exception;
+use Exception;
 
 /**
  * Class DataObjectException

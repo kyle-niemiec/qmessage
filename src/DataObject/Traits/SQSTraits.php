@@ -1,6 +1,6 @@
 <?php
 
-namespace App\QMessage\DataObject\Traits;
+namespace CBW\QMessage\DataObject\Traits;
 
 use Symfony\Component\Serializer\Annotation as Serializer;
 

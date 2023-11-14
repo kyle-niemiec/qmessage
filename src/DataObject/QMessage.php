@@ -2,10 +2,10 @@
 
 namespace CBW\QMessage\DataObject;
 
-use App\QMessage\DataObject\Traits\SQSTraits;
-use App\QMessage\DataObject\Traits\VoxieTraits;
 use CBW\QMessage\DataObject\QMessage\ContactQMessage;
 use CBW\QMessage\DataObject\QMessage\ReservationQMessage;
+use CBW\QMessage\DataObject\Traits\SQSTraits;
+use CBW\QMessage\DataObject\Traits\VoxieTraits;
 use CBW\QMessage\Enumeration\EventType;
 use Symfony\Component\Serializer\Annotation as Serializer;
 
@@ -32,7 +32,7 @@ class QMessage extends AbstractDataObject
     /**
      * @var int $franchiseId
      */
-    #[Serializer\Ignore()]
+    #[Serializer\Ignore]
     public int $franchiseId;
 
     /**

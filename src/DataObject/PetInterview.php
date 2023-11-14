@@ -20,7 +20,7 @@ class PetInterview extends AbstractDataObject
      */
     #[Serializer\Groups(["default", "accept"])]
     #[Serializer\SerializedName("email")]
-    public $email;
+    public string $email;
 
     /**
      * The id of the location to send the confirmation for.
@@ -31,7 +31,7 @@ class PetInterview extends AbstractDataObject
      */
     #[Serializer\Groups(["default", "accept"])]
     #[Serializer\SerializedName("camp_id")]
-    public $campId;
+    public int $campId;
 
     /**
      * @var DateTime

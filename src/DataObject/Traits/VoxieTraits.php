@@ -1,6 +1,6 @@
 <?php
 
-namespace App\QMessage\DataObject\Traits;
+namespace CBW\QMessage\DataObject\Traits;
 
 use Symfony\Component\Serializer\Annotation as Serializer;
 
@@ -14,6 +14,6 @@ trait VoxieTraits
      * @var int|null $voxieTeamId
      */
     #[Serializer\Groups(["default", "accept"])]
-    protected ?int $voxieTeamId;
+    public ?int $voxieTeamId;
 
 }

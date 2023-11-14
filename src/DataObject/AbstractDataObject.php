@@ -23,7 +23,8 @@ abstract class AbstractDataObject
     {
         return $serializer->serialize(
             data: $this,
-            format: 'json'
+            format: 'json',
+            context: ['groups' => 'default']
         );
     }
 
@@ -43,7 +44,8 @@ abstract class AbstractDataObject
         return $serializer->deserialize(
             data: $dataObject,
             type: static::class,
-            format: 'json'
+            format: 'json',
+            context: ['groups' => 'accept']
         );
     }
 }
