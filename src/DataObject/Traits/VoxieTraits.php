@@ -16,4 +16,10 @@ trait VoxieTraits
     #[Serializer\Groups(["default", "accept"])]
     public ?int $voxieTeamId;
 
+    /**
+     * @var string|null $phoneNumber
+     */
+    #[Serializer\Groups(["default", "accept"])]
+    public ?string $phoneNumber;
+
 }

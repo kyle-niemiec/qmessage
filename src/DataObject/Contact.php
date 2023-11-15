@@ -74,10 +74,10 @@ final class Contact extends AbstractDataObject
     public string $email;
 
     /**
-     * @var string $previousEmail
+     * @var string|null $previousEmail
      */
     #[Serializer\Groups(["default", "accept"])]
-    public string $previousEmail;
+    public ?string $previousEmail;
 
     /**
      * @var string|null $url
