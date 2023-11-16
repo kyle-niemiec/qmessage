@@ -3,8 +3,10 @@
 namespace CBW\QMessage\DataObject;
 
 use CBW\QMessage\DataObject\QMessage\ContactQMessage;
+use CBW\QMessage\DataObject\QMessage\PetInterviewQMessage;
 use CBW\QMessage\DataObject\QMessage\ReservationQMessage;
 use CBW\QMessage\DataObject\QMessage\ReservationReminderQMessage;
+use CBW\QMessage\DataObject\QMessage\VaccineQMessage;
 use CBW\QMessage\DataObject\Traits\SQSTraits;
 use CBW\QMessage\DataObject\Traits\VoxieTraits;
 use CBW\QMessage\Enumeration\EventType;
@@ -52,9 +54,9 @@ class QMessage extends AbstractDataObject
             EventType::CREATE_CONTACT->value => ContactQMessage::class,
             EventType::CREATE_INTERVIEW->value => ReservationQMessage::class,
             EventType::DAYCARE_CONFIRMATION->value => ReservationQMessage::class,
-//            EventType::EXPIRING_VACCINE->value => VaccineQMessage::class,
+            EventType::EXPIRING_VACCINE->value => VaccineQMessage::class,
             EventType::NEW_LEAD->value => ContactQMessage::class,
-//            EventType::PASSED_INTERVIEW->value => PetInterviewQMessage::class,
+            EventType::PASSED_INTERVIEW->value => PetInterviewQMessage::class,
             EventType::RESERVATION_REMINDER->value => ReservationReminderQMessage::class,
             EventType::THANK_YOU->value => ContactQMessage::class,
             EventType::UPDATE_CONTACT->value => ContactQMessage::class,
